@@ -1,5 +1,19 @@
-# FDE On-Prem Engine: Zero-Dependency SQLite WAL Concurrent Queue
-import sqlite3, os, tempfile
+"""
+Forward Deployed Engineering (FDE) - Field Manual (Companion Codebase)
+Author: Rakibul Hassan (https://aiwithr.github.io/)
+Book Chapter: Chapter 2 - লোকাল আর্কিটেকচার ও এআই ইঞ্জিন
+Book Reference URL: https://aiwithr.github.io/fde_book/chapter-2/
+Repository: https://github.com/raqueeb/fdebook_companion
+License: MIT
+
+Description:
+ক্লাউড বা ক্যাফকা ছাড়া অন-প্রেম সার্ভারে হাই-কনকারেন্সি প্রসেসিংয়ের জন্য
+জিরো-ডিপেন্ডেন্সি SQLite WAL (Write-Ahead Logging) কিউ আর্কিটেকচার।
+"""
+
+import sqlite3
+import os
+import tempfile
 
 def init_local_wal_queue(db_path: str = "fde_queue.db") -> sqlite3.Connection:
     conn = sqlite3.connect(db_path, timeout=10.0)

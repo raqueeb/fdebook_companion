@@ -1,4 +1,15 @@
-# FDE Resilient Pipeline: Self-Healing On-Prem Deploy & Auto-Rollback
+# ==============================================================================
+# Forward Deployed Engineering (FDE) - Field Manual (Companion Codebase)
+# Author: Rakibul Hassan (https://aiwithr.github.io/)
+# Book Chapter: Chapter 3 - দ্য নিউ এসডিএলসি ও পাইপলাইন
+# Book Reference URL: https://aiwithr.github.io/fde_book/chapter-3/
+# Repository: https://github.com/raqueeb/fdebook_companion
+# License: MIT
+#
+# Description:
+# সেলফ-হিলিং অন-প্রেম সিআই/সিডি অটোমেশন পাইপলাইন (Self-Healing Deploy & Auto-Rollback)
+# ==============================================================================
+
 name: OnPrem-Resilient-Deploy
 on: [push]
 jobs:

@@ -1,4 +1,20 @@
-# FDE Hyper-Care Tool: Proactive Memory Spike & Latency Watchdog
+"""
+Forward Deployed Engineering (FDE) - Field Manual (Companion Codebase)
+Author: Rakibul Hassan (https://aiwithr.github.io/)
+Book Chapter: Conclusion - হ্যান্ডওভার, সাসটেইনেবিলিটি ও এক্সিট
+Book Reference URL: https://aiwithr.github.io/fde_book/conclusion/
+Repository: https://github.com/raqueeb/fdebook_companion
+License: MIT
+
+Description:
+হ্যান্ডওভার-পরবর্তী হাইপার-কেয়ার (Hyper-Care) পর্বের প্রোঅ্যাকটিভ মেমোরি স্পাইক
+ও লেটেন্সি ডিটেকশন ওয়াচডগ (অটো-বাফার ফ্ল্যাশ ও প্রোঅ্যাকটিভ নোটিফিকেশন)।
+"""
+
+import sys
+if sys.platform == "win32" and hasattr(sys.stdout, "reconfigure"):
+    sys.stdout.reconfigure(encoding="utf-8")
+
 def monitor_hypercare_worker(worker_name: str, ram_mb: int, latency_sec: float) -> dict:
     RAM_LIMIT_MB, LATENCY_LIMIT_SEC = 1500, 2.5
 

@@ -1,4 +1,16 @@
-# FDE Field Engine: Async ISP Ticket Correlation & Routing Worker
+"""
+Forward Deployed Engineering (FDE) - Field Manual (Companion Codebase)
+Author: Rakibul Hassan (https://aiwithr.github.io/)
+Book Chapter: Chapter 4 - ফিল্ড প্লেবুক ও রিয়েল ওয়ার্ল্ড কেস
+Book Reference URL: https://aiwithr.github.io/fde_book/chapter-4/
+Repository: https://github.com/raqueeb/fdebook_companion
+License: MIT
+
+Description:
+ট্র্যাক এ (ISP কেস স্টাডি): ঢাকার আইএসপি ফাইবার কাট (OLT LOS Outage) হ্যান্ডলিংয়ের জন্য
+অ্যাসিনক্রোনাস টিকেট কোরিলেশন ও স্মার্ট এসএমএস রাউটিং ওয়ার্কার।
+"""
+
 import asyncio
 
 # ওএলটি সুইচের লাইভ টেলিমেট্রি ক্যাশ (লোকাল মেমোরিতে)
@@ -12,12 +24,18 @@ async def route_isp_ticket(ticket: dict) -> dict:
     await asyncio.sleep(0.05)  # লোকাল এসএমএস গেটওয়ে কলের নন-ব্লকিং সিমুলেশন
 
     if olt["status"] == "FIBER_CUT":
-        return {"ticket_id": ticket["id"], "action": "GROUP_UNDER_MASTER_OUTAGE",
-                "sms": f"আপনার এলাকায় ফাইবার মেরামতের কাজ চলছে। আনুমানিক সময় {olt['eta_min']} মিনিট।",
-                "dispatch": "FIELD_FIBER_TEAM"}
-    return {"ticket_id": ticket["id"], "action": "SEND_TO_LOCAL_LLM_TRIAGE",
-            "sms": "আপনার অভিযোগটি সাপোর্ট ইঞ্জিনিয়ার দেখছেন।",
-            "dispatch": "L1_SUPPORT_DESK"}
+        return {
+            "ticket_id": ticket["id"],
+            "action": "GROUP_UNDER_MASTER_OUTAGE",
+            "sms": f"আপনার এলাকায় ফাইবার মেরামতের কাজ চলছে। আনুমানিক সময় {olt['eta_min']} মিনিট।",
+            "dispatch": "FIELD_FIBER_TEAM"
+        }
+    return {
+        "ticket_id": ticket["id"],
+        "action": "SEND_TO_LOCAL_LLM_TRIAGE",
+        "sms": "আপনার অভিযোগটি সাপোর্ট ইঞ্জিনিয়ার দেখছেন।",
+        "dispatch": "L1_SUPPORT_DESK"
+    }
 
 async def main():
     incoming_burst = [{"id": 101, "zone": "DHK-DHN-07"}, {"id": 102, "zone": "DHK-UTT-03"}]

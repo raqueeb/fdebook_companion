@@ -1,4 +1,16 @@
-# FDE Intro Diagnostic: Silent Abandonment & Shadow-IT Detector
+"""
+Forward Deployed Engineering (FDE) - Field Manual (Companion Codebase)
+Author: Rakibul Hassan (https://aiwithr.github.io/)
+Book Chapter: Introduction - গ্রাউন্ড রিয়েলিটি ও সাইলেন্ট চার্ন
+Book Reference URL: https://aiwithr.github.io/fde_book/intro/
+Repository: https://github.com/raqueeb/fdebook_companion
+License: MIT
+
+Description:
+ডেটাবেজ লগ ও ইউজার অ্যাক্টিভিটি থেকে সাইলেন্ট চার্ন (Silent Churn) ও শ্যাডো আইটি (Shadow-IT)
+শনাক্ত করার ফিল্ড ডায়াগনস্টিক ইঞ্জিন।
+"""
+
 from datetime import date
 
 def audit_system_adoption(total_staff: int, active_users_30d: int, last_tx_date: str) -> dict:

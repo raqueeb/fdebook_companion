@@ -1,4 +1,16 @@
-# FDE Field Diagnostic: As-Is Workflow Bottleneck Analyzer
+"""
+Forward Deployed Engineering (FDE) - Field Manual (Companion Codebase)
+Author: Rakibul Hassan (https://aiwithr.github.io/)
+Book Chapter: Chapter 1 - ফিল্ড ডিসকভারি ও এসওপির ব্যবচ্ছেদ
+Book Reference URL: https://aiwithr.github.io/fde_book/chapter-1/
+Repository: https://github.com/raqueeb/fdebook_companion
+License: MIT
+
+Description:
+কাগুজে এসওপি বনাম শ্যাডো সেশনের আসল সময়ের পার্থক্য পরিমাপ করে ফিল্ডের প্রাইমারি বটলনেক
+বের করার ডায়াগনস্টিক ইঞ্জিন।
+"""
+
 def analyze_workflow_bottlenecks(workflow_steps: list) -> dict:
     diagnostics = []
     total_wasted_minutes = 0

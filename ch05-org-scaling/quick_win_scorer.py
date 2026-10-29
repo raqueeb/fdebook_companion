@@ -1,4 +1,20 @@
-# FDE Field Tool: First-Week Quick-Win Prioritization Scorer
+"""
+Forward Deployed Engineering (FDE) - Field Manual (Companion Codebase)
+Author: Rakibul Hassan (https://aiwithr.github.io/)
+Book Chapter: Chapter 5 - অর্গানাইজেশন স্কেলিং ও প্যাটার্ন
+Book Reference URL: https://aiwithr.github.io/fde_book/chapter-5/
+Repository: https://github.com/raqueeb/fdebook_companion
+License: MIT
+
+Description:
+প্রথম সপ্তাহে কুইক-উইন (Quick-Win) বাছাই করার জন্য অপ্টিমাইজড প্রায়োরিটাইজেশন স্কোরার
+(দৈনিক অপচয় বনাম বিজনেস রুল ক্ল্যারিটি রিস্ক মডেলিং)।
+"""
+
+import sys
+if sys.platform == "win32" and hasattr(sys.stdout, "reconfigure"):
+    sys.stdout.reconfigure(encoding="utf-8")
+
 discovered_tasks = [
     {"name": "ম্যানেজারের ফিজিক্যাল সইয়ের অপেক্ষা", "daily_freq": 20, "mins_each": 6, "rules_clear": True},
     {"name": "সন্ধ্যার এক্সেল সামারি রিপোর্ট তৈরি", "daily_freq": 1, "mins_each": 90, "rules_clear": True},

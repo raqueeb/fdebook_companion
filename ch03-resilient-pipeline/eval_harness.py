@@ -1,4 +1,16 @@
-# FDE Field Eval: Evaluation Harness Before Build
+"""
+Forward Deployed Engineering (FDE) - Field Manual (Companion Codebase)
+Author: Rakibul Hassan (https://aiwithr.github.io/)
+Book Chapter: Chapter 3 - দ্য নিউ এসডিএলসি ও পাইপলাইন
+Book Reference URL: https://aiwithr.github.io/fde_book/chapter-3/
+Repository: https://github.com/raqueeb/fdebook_companion
+License: MIT
+
+Description:
+বিল্ডের আগেই গোল্ডেন ডেটাসেট ইভ্যালুয়েশন হারনেস (Evaluation Harness Testbench) -
+এলএলএম বা রুল-বেইজড ট্রায়াজ ইঞ্জিনের স্কিমা ও অ্যাকুরেসি ভ্যালিডেশন।
+"""
+
 def evaluate_triage_model(golden_dataset: list, triage_fn) -> dict:
     valid_schema_count = 0
     correct_category_count = 0

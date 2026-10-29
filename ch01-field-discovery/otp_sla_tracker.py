@@ -1,4 +1,16 @@
-# FDE Field Tool: 1-Tap OTP Approval & Falsifiable SLA Metric Tracker
+"""
+Forward Deployed Engineering (FDE) - Field Manual (Companion Codebase)
+Author: Rakibul Hassan (https://aiwithr.github.io/)
+Book Chapter: Chapter 1 - ফিল্ড ডিসকভারি ও এসওপির ব্যবচ্ছেদ
+Book Reference URL: https://aiwithr.github.io/fde_book/chapter-1/
+Repository: https://github.com/raqueeb/fdebook_companion
+License: MIT
+
+Description:
+১-ট্যাপ ওটিপি অনুমোদন এবং ১০ মিনিটের ফলসিফায়েবল এসএলএ (Falsifiable SLA Metric)
+ট্র্যাকিং টুল।
+"""
+
 def approve_challan_with_otp(challan_id: str, otp_ok: bool, wait_mins: float) -> dict:
     SLA_TARGET_MINS = 10.0  # আমাদের ফলসিফায়েবল সাকসেস মেট্রিক (১০ মিনিটের নিচে)
 
