@@ -1,0 +1,22 @@
+# FDE Resilient Pipeline: Self-Healing On-Prem Deploy & Auto-Rollback
+name: OnPrem-Resilient-Deploy
+on: [push]
+jobs:
+  deploy-and-verify:
+    runs-on: self-hosted
+    steps:
+      - name: Snapshot Last Stable Commit & Deploy New Build
+        run: |
+          git rev-parse HEAD~1 > .last_stable_commit
+          docker compose up -d --build
+      - name: Runtime Healthcheck & Self-Healing Rollback
+        run: |
+          sleep 5
+          HTTP_STATUS=$(curl -s -o /dev/null -w "%{http_code}" http://localhost:8000/healthz || echo "500")
+          if [ "$HTTP_STATUS" -ne 200 ]; then
+            echo "Healthcheck failed ($HTTP_STATUS). Rolling back to last stable state..."
+            git checkout $(cat .last_stable_commit)
+            docker compose up -d --build
+            exit 1
+          fi
+          echo "System healthy (200 OK). Deployment verified."

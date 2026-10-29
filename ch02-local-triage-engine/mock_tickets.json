@@ -1,0 +1,26 @@
+[
+  {
+    "id": "TKT-001",
+    "text": "আমার মালের ট্রাক সকাল থেকে গেটে দাঁড়িয়ে আছে, চালানে নাকি ভুল আছে, খুব আর্জেন্ট!",
+    "expected_category": "BILLING",
+    "expected_priority": "HIGH"
+  },
+  {
+    "id": "TKT-002",
+    "text": "ভাই গাজীপুর গোডাউনে ৫০০ বস্তা সিমেন্টের স্টক কম দেখাচ্ছে, একটু চেক করেন।",
+    "expected_category": "STOCK",
+    "expected_priority": "MEDIUM"
+  },
+  {
+    "id": "TKT-003",
+    "text": "চট্টগ্রাম পোর্ট থেকে কন্টেইনার বের হয়েছে কিন্তু এখনো কারখানায় পৌঁছায়নি।",
+    "expected_category": "DELIVERY",
+    "expected_priority": "HIGH"
+  },
+  {
+    "id": "TKT-004",
+    "text": "গত মাসের ইনভয়েসে ট্রান্সপোর্ট রিবেট ৫% বাদ দেওয়া হয়নি, বিলটা সংশোধন করা দরকার।",
+    "expected_category": "BILLING",
+    "expected_priority": "MEDIUM"
+  }
+]
