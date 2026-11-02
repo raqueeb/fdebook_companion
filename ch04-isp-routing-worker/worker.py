@@ -13,35 +13,35 @@ Description:
 
 import asyncio
 
-# ওএলটি সুইচের লাইভ টেলিমেট্রি ক্যাশ (লোকাল মেমোরিতে)
-OLT_STATUS_CACHE = {
-    "DHK-DHN-07": {"status": "FIBER_CUT", "eta_min": 45},
-    "DHK-UTT-03": {"status": "NORMAL", "eta_min": 0}
+ZONE_STATUS = {
+    "DHK-DHN-07": {"status": "LOS", "eta_min": 45},   # এনএমএস থেকে আসা ক্যাশ
+    "DHK-MIR-02": {"status": "NORMAL", "eta_min": 0}
 }
+ALERTED_ZONES = set()  # যেসব জোনের অ্যালার্ট ফিল্ড টিমের কাছে চলে গেছে
 
-async def route_isp_ticket(ticket: dict) -> dict:
-    olt = OLT_STATUS_CACHE.get(ticket["zone"], {"status": "NORMAL"})
-    await asyncio.sleep(0.05)  # লোকাল এসএমএস গেটওয়ে কলের নন-ব্লকিং সিমুলেশন
-
-    if olt["status"] == "FIBER_CUT":
-        return {
-            "ticket_id": ticket["id"],
-            "action": "GROUP_UNDER_MASTER_OUTAGE",
-            "sms": f"আপনার এলাকায় ফাইবার মেরামতের কাজ চলছে। আনুমানিক সময় {olt['eta_min']} মিনিট।",
-            "dispatch": "FIELD_FIBER_TEAM"
-        }
+async def route_ticket(t: dict) -> dict:
+    info = ZONE_STATUS.get(t["zone"], {"status": "NORMAL"})
+    await asyncio.sleep(0.05)  # এসএমএস গেটওয়ে বা কিউয়ে লেখার নন-ব্লকিং কলের সিমুলেশন
+    if info["status"] != "LOS":
+        return {"id": t["id"], "action": "QUEUE_FOR_LLM_TRIAGE", "dispatch": "SQLITE_QUEUE"}
+    first = t["zone"] not in ALERTED_ZONES  # চেক আর অ্যাডের মাঝে কোনো await নেই
+    ALERTED_ZONES.add(t["zone"])
+    sms = f"ফাইবার মেরামতের কাজ চলছে। আনুমানিক {info['eta_min']} মিনিট।"
     return {
-        "ticket_id": ticket["id"],
-        "action": "SEND_TO_LOCAL_LLM_TRIAGE",
-        "sms": "আপনার অভিযোগটি সাপোর্ট ইঞ্জিনিয়ার দেখছেন।",
-        "dispatch": "L1_SUPPORT_DESK"
+        "id": t["id"],
+        "action": "GROUP_UNDER_MASTER_OUTAGE",
+        "sms": sms,
+        "dispatch": "FIELD_FIBER_TEAM" if first else "ALREADY_DISPATCHED"
     }
 
 async def main():
-    incoming_burst = [{"id": 101, "zone": "DHK-DHN-07"}, {"id": 102, "zone": "DHK-UTT-03"}]
-    results = await asyncio.gather(*(route_isp_ticket(t) for t in incoming_burst))
-    for r in results:
-        print(f"Ticket #{r['ticket_id']}: {r['action']} -> {r['dispatch']}")
+    burst = [
+        {"id": 101, "zone": "DHK-DHN-07"},
+        {"id": 102, "zone": "DHK-MIR-02"},
+        {"id": 103, "zone": "DHK-DHN-07"}
+    ]
+    for r in await asyncio.gather(*(route_ticket(t) for t in burst)):
+        print(f"Ticket #{r['id']}: {r['action']} -> {r['dispatch']}")
 
 if __name__ == "__main__":
     asyncio.run(main())

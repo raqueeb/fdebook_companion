@@ -12,22 +12,30 @@ Description:
 """
 
 import sys
+
+# Ensure UTF-8 output on Windows consoles
 if sys.platform == "win32" and hasattr(sys.stdout, "reconfigure"):
     sys.stdout.reconfigure(encoding="utf-8")
 
+SAVED_PER_CONTAINER_USD = 150  # ধরে নেয়া মান: ক্লায়েন্টের আসল ডেমারেজ ট্যারিফ থেকে বসাবেন
+
 def build_manager_hero_report(manager_name: str, logs: list) -> str:
     total = len(logs)
-    auto_cleared = sum(1 for x in logs if x["status"] == "APPROVED")
-    flagged = total - auto_cleared
-    saved_usd = auto_cleared * 150  # প্রতি কন্টেইনারে গড় ১৫০ ডলার ডেমারেজ সাশ্রয়
+    cleared = sum(1 for x in logs if x["status"] == "READY_FOR_GATE_PASS")
+    flagged = total - cleared
+    saved_usd = cleared * SAVED_PER_CONTAINER_USD
 
     return (
         f"বিষয়: দৈনিক পোর্ট অপারেশন সামারি | তত্ত্বাবধানে: {manager_name}\n"
-        f"- মোট কন্টেইনার প্রসেসড: {total} টি (অটো-গেটপাস: {auto_cleared} টি)\n"
+        f"- মোট কন্টেইনার প্রসেসড: {total} টি (গেট পাসের জন্য তৈরি: {cleared} টি)\n"
         f"- কাস্টমস অডিটের জন্য ফ্ল্যাগড: {flagged} টি\n"
-        f"- আনুমানিক ডেমারেজ সাশ্রয়: ${saved_usd:,} USD"
+        f"- আনুমানিক ডেমারেজ সাশ্রয়: ${saved_usd:,}"
     )
 
 if __name__ == "__main__":
-    daily_logs = [{"status": "APPROVED"}, {"status": "APPROVED"}, {"status": "FLAGGED"}]
+    daily_logs = [
+        {"status": "READY_FOR_GATE_PASS"},
+        {"status": "READY_FOR_GATE_PASS"},
+        {"status": "FLAGGED"}
+    ]
     print(build_manager_hero_report("কামরুল হাসান, ডেপুটি ম্যানেজার (পোর্ট অপারেশনস)", daily_logs))

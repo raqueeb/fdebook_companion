@@ -8,27 +8,32 @@ License: MIT
 
 Description:
 ট্র্যাক বি (সাপ্লাই চেইনের কেস স্টাডি): চট্টগ্রাম বন্দরের বিল অব এন্ট্রি,
-ইনভয়েস এবং ওয়েব্রিজ স্কেল ওজনের থ্রি-ওয়ে রিকনসিলেশন ও ১% টলারেন্স অডিট ইঞ্জিন।
+ইনভয়েস এবং ওয়েব্রিজ স্লিপ ওজনের থ্রি-ওয়ে রিকনসিলেশন ও ১% টলারেন্স অডিট ইঞ্জিন।
 """
 
-def reconcile_shipment(customs: dict, invoice: dict, weighbridge: dict) -> dict:
-    declared_kg = customs["gross_kg"]                          # বিল অব এন্ট্রির ঘোষিত ওজন
-    invoiced_kg = invoice["net_kg"] + invoice["packing_kg"]    # ইনভয়েসের নিট + প্যাকিং ওজন
-    weighed_kg = weighbridge["scale_kg"]                       # ওয়েব্রিজ স্কেলের আসল ওজন
-    tolerance_kg = declared_kg * 0.01                          # ১% বাস্তব টলারেন্স সীমা
+TOLERANCE_PCT = 1  # হেড ক্লার্কের মুখে শোনা নিয়ম, ক্লায়েন্ট ভেদে বদলাবে
 
-    weight_within_limit = (abs(weighed_kg - declared_kg) <= tolerance_kg and
-                           abs(invoiced_kg - declared_kg) <= tolerance_kg)
-    hs_code_matched = customs["hs_code"] == invoice["hs_code"]
-    variance_kg = abs(weighed_kg - declared_kg)
+def hs6(code: str) -> str:
+    return code.replace(".", "")[:6]  # আন্তর্জাতিক এইচএস কোডের প্রথম ছয় ডিজিট
 
-    if weight_within_limit and hs_code_matched:
-        return {"status": "APPROVED", "action": "AUTO_GATE_PASS", "variance_kg": variance_kg}
-    return {"status": "FLAGGED", "action": "MANUAL_CUSTOMS_AUDIT", "variance_kg": variance_kg}
+def reconcile(customs: dict, invoice: dict, slip: dict) -> dict:
+    declared = customs["gross_kg"]                       # বিল অব এন্ট্রির ঘোষিত ওজন
+    invoiced = invoice["net_kg"] + invoice["packing_kg"]  # নিট + প্যাকিং ওজন
+    weighed = slip["scale_kg"] - slip["tare_kg"]          # ট্রাক আর খালি কন্টেইনারের ওজন বাদ
+
+    def within(kg):  # পূর্ণসংখ্যার হিসাব, তাই ফ্লোটিং পয়েন্টের গোলমাল নেই
+        return abs(kg - declared) * 100 <= declared * TOLERANCE_PCT
+
+    hs_ok = hs6(customs["hs_code"]) == hs6(invoice["hs_code"])
+    ok = within(weighed) and within(invoiced) and hs_ok
+    return {
+        "status": "READY_FOR_GATE_PASS" if ok else "FLAGGED",
+        "variance_kg": weighed - declared,
+        "hs_match": hs_ok
+    }
 
 if __name__ == "__main__":
-    # চট্টগ্রাম বন্দরের আসল চালানের নমুনা ডেটা
-    customs_doc = {"gross_kg": 50000, "hs_code": "8471.30"}
-    invoice_doc = {"net_kg": 49500, "packing_kg": 500, "hs_code": "8471.30"}
-    scale_slip = {"scale_kg": 50150}
-    print(reconcile_shipment(customs_doc, invoice_doc, scale_slip))
+    customs_doc = {"gross_kg": 25000, "hs_code": "8471.30"}
+    invoice_doc = {"net_kg": 24750, "packing_kg": 250, "hs_code": "8471.30"}
+    print(reconcile(customs_doc, invoice_doc, {"scale_kg": 40075, "tare_kg": 15000}))
+    print(reconcile(customs_doc, invoice_doc, {"scale_kg": 40400, "tare_kg": 15000}))
