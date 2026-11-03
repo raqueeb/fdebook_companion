@@ -24,7 +24,7 @@ discovered_tasks = [
 
 def calculate_quick_win_score(task: dict) -> float:
     daily_wasted_mins = task["daily_freq"] * task["mins_each"]
-    # বিজনেস রুল অস্পষ্ট হলে প্রথম সপ্তাহে ঝুঁকি বেশি, তাই স্কোর ৭০% কমিয়ে দেওয়া হয়
+    # নিয়ম অস্পষ্ট হলে প্রথম সপ্তাহে ঝুঁকি বেশি, তাই স্কোর ৭০% কমানো (০.৩ আমার হাতের হিসাব)
     risk_multiplier = 1.0 if task["rules_clear"] else 0.3
     return round(daily_wasted_mins * risk_multiplier, 1)
 

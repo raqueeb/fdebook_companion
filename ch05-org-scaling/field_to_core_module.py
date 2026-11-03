@@ -7,25 +7,30 @@ Repository: https://github.com/raqueeb/fdebook_companion
 License: MIT
 
 Description:
-প্যালান্টির প্যাটার্ন (Palantir Pattern): কোর কোডে হাত না দিয়ে ব্রাঞ্চ কনফিগারেশন
+প্যালান্টির প্যাটার্ন (Palantir Pattern): কোর কোডে হাত না দিয়ে ক্লায়েন্ট কনফিগারেশন
 ডিকাপল করার ফিল্ড-টু-কোর ইঞ্জিনিয়ারিং আর্কিটেকচার (Field-to-Core Engine)।
 """
 
-class CoreReconcilerEngine:
-    def __init__(self, branch_cfg: dict):
-        self.branch = branch_cfg["name"]
-        self.tol_pct = branch_cfg["tolerance_pct"]
+from decimal import Decimal
 
-    def verify(self, declared_kg: float, actual_kg: float) -> dict:
-        max_diff = declared_kg * (self.tol_pct / 100.0)
-        passed = abs(actual_kg - declared_kg) <= max_diff
-        return {"branch": self.branch, "status": "APPROVED" if passed else "FLAGGED"}
+def core_reconcile(customs: dict, invoice: dict, slip: dict, cfg: dict) -> dict:
+    declared = Decimal(customs["gross_kg"])
+    limit = declared * Decimal(cfg["tolerance_pct"]) / 100    # ছাড়ের সীমা আসছে কনফিগ থেকে
+    weighed = Decimal(slip["scale_kg"] - slip["tare_kg"])      # ট্রাক আর কন্টেইনারের ট্যার বাদ
+    invoiced = Decimal(invoice["net_kg"] + invoice["packing_kg"])
+    hs_ok = customs["hs_code"].replace(".", "")[:6] == invoice["hs_code"].replace(".", "")[:6]
+    ok = abs(weighed - declared) <= limit and abs(invoiced - declared) <= limit and hs_ok
+    return {"client": cfg["name"], "status": "READY_FOR_GATE_PASS" if ok else "FLAGGED"}
 
 if __name__ == "__main__":
-    # কোর কোডে হাত না দিয়ে শুধু কনফিগ বদলেই ভিন্ন ব্রাঞ্চে ডেপ্লয়মেন্ট
-    BRANCH_CONFIGS = [
-        {"name": "Chattogram_Port", "tolerance_pct": 1.0},
-        {"name": "Narayanganj_Cement", "tolerance_pct": 0.5}
+    # কোর কোডে হাত না দিয়ে শুধু কনফিগ বদলেই তিনটা ক্লায়েন্টে ডেপ্লয়
+    CLIENT_CONFIGS = [
+        {"name": "ctg_port_cnf", "tolerance_pct": "1"},
+        {"name": "ngj_cement", "tolerance_pct": "0.5"},
+        {"name": "gzp_garments", "tolerance_pct": "2"},
     ]
-    for cfg in BRANCH_CONFIGS:
-        print(CoreReconcilerEngine(cfg).verify(declared_kg=50000, actual_kg=50350))
+    customs_doc = {"gross_kg": 25000, "hs_code": "8471.30"}
+    invoice_doc = {"net_kg": 24750, "packing_kg": 250, "hs_code": "8471.30"}
+    slip_doc = {"scale_kg": 40200, "tare_kg": 15000}
+    for cfg in CLIENT_CONFIGS:
+        print(core_reconcile(customs_doc, invoice_doc, slip_doc, cfg))
