@@ -30,6 +30,7 @@ if __name__ == "__main__":
     tmp_db = os.path.join(tempfile.gettempdir(), "fde_queue_demo.db")
     db = init_local_wal_queue(tmp_db)
     db.execute("INSERT INTO ticket_queue (raw_msg) VALUES (?)", ("চালানে ওজনের গরমিল",))
+    db.commit()  # ডেটা ডিস্কে সেভ করা হলো
     mode = db.execute("PRAGMA journal_mode;").fetchone()[0]
     count = db.execute("SELECT count(*) FROM ticket_queue").fetchone()[0]
     print(f"Queue Mode: {mode.upper()} | Pending Tickets: {count}")

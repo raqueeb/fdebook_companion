@@ -23,10 +23,12 @@ async def route_ticket(t: dict) -> dict:
     info = ZONE_STATUS.get(t["zone"], {"status": "NORMAL"})
     await asyncio.sleep(0.05)  # এসএমএস গেটওয়ে বা কিউয়ে লেখার নন-ব্লকিং কলের সিমুলেশন
     if info["status"] != "LOS":
+        ALERTED_ZONES.discard(t["zone"])  # জোন সেরে উঠলে পরের ফাইবার কাটায় আবার অ্যালার্ট যাবে
         return {"id": t["id"], "action": "QUEUE_FOR_LLM_TRIAGE", "dispatch": "SQLITE_QUEUE"}
     first = t["zone"] not in ALERTED_ZONES  # চেক আর অ্যাডের মাঝে কোনো await নেই
     ALERTED_ZONES.add(t["zone"])
-    sms = f"ফাইবার মেরামতের কাজ চলছে। আনুমানিক {info['eta_min']} মিনিট।"
+    eta = info.get("eta_min")
+    sms = f"ফাইবার মেরামতের কাজ চলছে। আনুমানিক {eta} মিনিট।" if eta else "ফাইবার মেরামতের কাজ চলছে। সংযোগ দ্রুত স্বাভাবিক হবে।"
     return {
         "id": t["id"],
         "action": "GROUP_UNDER_MASTER_OUTAGE",

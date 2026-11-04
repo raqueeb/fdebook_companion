@@ -16,7 +16,7 @@ if sys.platform == "win32" and hasattr(sys.stdout, "reconfigure"):
     sys.stdout.reconfigure(encoding="utf-8")
 
 discovered_tasks = [
-    {"name": "ম্যানেজারের ফিজিক্যাল সইয়ের অপেক্ষা", "daily_freq": 20, "mins_each": 6, "rules_clear": True},
+    {"name": "ম্যানেজারের ফিজিক্যাল সইয়ের অপেক্ষা", "daily_freq": 2, "mins_each": 60, "rules_clear": True},
     {"name": "সন্ধ্যার এক্সেল সামারি রিপোর্ট তৈরি", "daily_freq": 1, "mins_each": 90, "rules_clear": True},
     {"name": "কাগুজে চালান ও গেট পাসের জটিল মিলানো", "daily_freq": 15, "mins_each": 8, "rules_clear": False},
     {"name": "ভ্যাট ও রিবেটের ম্যানুয়াল ক্যালকুলেশন", "daily_freq": 2, "mins_each": 30, "rules_clear": True},
