@@ -7,12 +7,12 @@ Repository: https://github.com/raqueeb/fdebook_companion
 License: MIT
 
 Description:
-২০ মিনিটের ডোমেইন স্প্রিন্ট: ফিল্ড একাউন্টেন্টের লাল খাতার নিয়ম অনুযায়ী
+২০ মিনিটের ডোমেইন স্প্রিন্ট: হেড অ্যাকাউন্ট্যান্টের লাল খাতার নিয়ম অনুযায়ী
 ভ্যাট (VAT) ও ট্রান্সপোর্ট রিবেট গার্ডরেইল ক্যালকুলেটর ইঞ্জিন।
 """
 
 def calculate_net_vat(commercial_amount: float, transport_cost: float = 0.0) -> float:
-    # ১. ইনপুট গার্ডরেইল: চালানের অঙ্ক কখনোই ঋণাত্মক হতে পারবে না
+    # ১. ইনপুট গার্ডরেইল: চালানের অঙ্ক কখনোই নেগেটিভ হতে পারবে না
     if commercial_amount < 0 or transport_cost < 0:
         raise ValueError("GUARDRAIL_ERROR: Amount cannot be negative")
 

@@ -32,12 +32,15 @@ def triage_customer_ticket(raw_text: str) -> dict:
         with urllib.request.urlopen(req, timeout=5) as resp:
             body = json.loads(resp.read().decode("utf-8"))
             return json.loads(body["response"])
-    except Exception:
-        # অফলাইন সিমুলেশন ফলব্যাক (যদি ল্যাপটপে ওই মুহূর্তে Ollama সার্ভিস চালু না থাকে)
+    except Exception as err:
+        # অফলাইন ফলব্যাক: Ollama চালু না থাকলে একটা বানানো উত্তর দেয়, কিন্তু "note" কি-তে
+        # পরিষ্কার লেখা থাকে এটা আসল মডেলের উত্তর নয়। চুপচাপ ভুল বোঝানোর চেয়ে এটা নিরাপদ।
+        print(f"[OFFLINE_FALLBACK] Ollama reachable noy ({type(err).__name__}); canned answer ferot dewa hocche.")
         return {
             "category": "BILLING",
             "priority": "HIGH",
-            "action": "Verify challan discrepancy immediately and clear truck at gate"
+            "action": "Verify challan discrepancy immediately and clear truck at gate",
+            "note": "OFFLINE_FALLBACK: Ollama not reachable at localhost:11434, this is a canned answer"
         }
 
 if __name__ == "__main__":

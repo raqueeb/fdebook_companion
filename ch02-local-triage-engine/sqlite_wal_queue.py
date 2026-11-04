@@ -7,7 +7,7 @@ Repository: https://github.com/raqueeb/fdebook_companion
 License: MIT
 
 Description:
-ক্লাউড বা ক্যাফকা ছাড়া অন-প্রেম সার্ভারে হাই-কনকারেন্সি প্রসেসিংয়ের জন্য
+ক্লাউড বা কাফকা ছাড়া অন-প্রেম সার্ভারে হাই-কনকারেন্সি প্রসেসিংয়ের জন্য
 জিরো-ডিপেন্ডেন্সি SQLite WAL (Write-Ahead Logging) কিউ আর্কিটেকচার।
 """
 

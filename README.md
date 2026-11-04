@@ -32,7 +32,7 @@
 
 * **জিরো-ক্লাউড ও অন-প্রেম প্রাধান্য ($0.00 Cloud Cost):** কোনো পেইড ক্লাউড সাবস্ক্রিপশন বা বিদেশি সার্ভারের ওপর নির্ভরতা নেই। সরকারি দপ্তর, বন্দর কিংবা কারখানার ইন্টারনেট-বিচ্ছিন্ন (Air-Gapped) সাধারণ অন-প্রেম সার্ভারে পুরো সিস্টেমটি শতভাগ সচল থাকে।
 * **জিরো এক্সটার্নাল ডিপেন্ডেন্সি (Standard Library First):** কোর স্ক্রিপ্টগুলো সাধারণ `Python 3.10+` এর স্ট্যান্ডার্ড লাইব্রেরি দিয়ে তৈরি। কোনো ভারী ভার্চুয়াল এনভায়রনমেন্ট বা প্যাকেজ জটিলতা ছাড়াই যেকোনো ফিল্ড মেশিনে সরাসরি রান করা যায়।
-* **প্যালান্টির প্যাটার্ন ও লোকাল এআই:** ক্যাফকা ছাড়াই `SQLite WAL` মোডে হাই-কনকারেন্সি কিউ, `Ollama` ও `Qwen 2.5` দিয়ে লোকাল এআই টিকিট ট্রায়াজ, গোল্ডেন ডেটাসেট ইভ্যালুয়েশন হারনেস এবং টেস্ট ফেইল করলে সেলফ-হিলিং অটো-রোলব্যাক পাইপলাইন।
+* **প্যালান্টির প্যাটার্ন ও লোকাল এআই:** কাফকা ছাড়াই `SQLite WAL` মোডে হাই-কনকারেন্সি কিউ, `Ollama` ও `Qwen 2.5` দিয়ে লোকাল এআই টিকিট ট্রায়াজ, গোল্ডেন ডেটাসেট ইভ্যালুয়েশন হারনেস এবং টেস্ট ফেইল করলে সেলফ-হিলিং অটো-রোলব্যাক পাইপলাইন।
 
 ---
 
@@ -48,7 +48,7 @@ fdebook_companion/
 │   ├── bottleneck_analyzer.py             # কাগুজে এসওপি বনাম আসল ফিল্ড বটলনেক ডায়াগনস্টিক
 │   └── otp_sla_tracker.py                 # ১-ট্যাপ ওটিপি অনুমোদন ও ১০ মিনিটের ফলসিফায়েবল মেট্রিক
 ├── ch02-local-triage-engine/
-│   ├── sqlite_wal_queue.py                # ক্যাফকা ছাড়া SQLite WAL হাই-কনকারেন্সি লোকাল কিউ
+│   ├── sqlite_wal_queue.py                # কাফকা ছাড়া SQLite WAL হাই-কনকারেন্সি লোকাল কিউ
 │   ├── triage.py                          # Ollama + Qwen 2.5 লোকাল এআই ট্রায়াজ ইঞ্জিন
 │   └── mock_tickets.json                  # বাংলা ও বাংলিশ কাস্টমার কমপ্লেইন্ট গোল্ডেন ডেটাসেট
 ├── ch03-resilient-pipeline/
@@ -78,7 +78,7 @@ fdebook_companion/
 | [**Introduction: গ্রাউন্ড রিয়েলিটি**](https://aiwithr.github.io/fde_book/intro/) | `intro-silent-churn/detect_silent_abandonment.py` | ডেটাবেজ স্ক্যান করে সাইলেন্ট চার্ন ও শ্যাডো আইটি শনাক্তকরণ | `python3 intro-silent-churn/detect_silent_abandonment.py` |
 | [**Chapter 1: ফিল্ড ডিসকাভারি ও এসওপি**](https://aiwithr.github.io/fde_book/chapter-1/) | `ch01-field-discovery/bottleneck_analyzer.py` | শ্যাডো সেশনের আসল সময় মেপে এসওপির বটলনেক বিশ্লেষণ | `python3 ch01-field-discovery/bottleneck_analyzer.py` |
 | [**Chapter 1: ফিল্ড ডিসকাভারি ও এসওপি**](https://aiwithr.github.io/fde_book/chapter-1/) | `ch01-field-discovery/otp_sla_tracker.py` | ম্যানেজারের ১-ট্যাপ ওটিপি অনুমোদন ও ১০ মিনিটের এসএলএ মেট্রিক | `python3 ch01-field-discovery/otp_sla_tracker.py` |
-| [**Chapter 2: লোকাল আর্কিটেকচার**](https://aiwithr.github.io/fde_book/chapter-2/) | `ch02-local-triage-engine/sqlite_wal_queue.py` | ক্যাফকা ছাড়া `SQLite WAL` মোডে হাই-কনকারেন্সি কিউ সামলানো | `python3 ch02-local-triage-engine/sqlite_wal_queue.py` |
+| [**Chapter 2: লোকাল আর্কিটেকচার**](https://aiwithr.github.io/fde_book/chapter-2/) | `ch02-local-triage-engine/sqlite_wal_queue.py` | কাফকা ছাড়া `SQLite WAL` মোডে হাই-কনকারেন্সি কিউ সামলানো | `python3 ch02-local-triage-engine/sqlite_wal_queue.py` |
 | [**Chapter 2: লোকাল আর্কিটেকচার**](https://aiwithr.github.io/fde_book/chapter-2/) | `ch02-local-triage-engine/triage.py` | লোকাল এআই (`Ollama`) দিয়ে বাংলা টিকিট ট্রায়াজ (ফলব্যাক সহ) | `python3 ch02-local-triage-engine/triage.py` |
 | [**Chapter 3: দ্য নিউ এসডিএলসি**](https://aiwithr.github.io/fde_book/chapter-3/) | `ch03-resilient-pipeline/domain_sprint_vat.py` | ২০ মিনিটের ডোমেইন স্প্রিন্ট: ভ্যাট ও রিবেট টেস্ট গার্ডরেইল | `python3 ch03-resilient-pipeline/domain_sprint_vat.py` |
 | [**Chapter 3: দ্য নিউ এসডিএলসি**](https://aiwithr.github.io/fde_book/chapter-3/) | `ch03-resilient-pipeline/eval_harness.py` | বিল্ডের আগে গোল্ডেন ডেটাসেটে মডেলের স্কিমা ও অ্যাকুরেসি টেস্ট | `python3 ch03-resilient-pipeline/eval_harness.py` |
@@ -123,7 +123,7 @@ ollama pull qwen2.5:1.5b
 # লোকাল ট্রায়াজ ইঞ্জিন রান করুন
 python3 ch02-local-triage-engine/triage.py
 ```
-> *নোট: কম্পিউটারে Ollama চালু না থাকলেও স্ক্রিপ্টটিতে অফলাইন সিমুলেশন ফলব্যাক দেওয়া আছে। ফলে কোনো পরিস্থিতিতেই প্রোগ্রাম ক্র্যাশ করবে না।*
+> *নোট: কম্পিউটারে Ollama চালু না থাকলে `triage.py` একটা বানানো উত্তর ফেরত দেয়, কিন্তু স্ক্রিনে `[OFFLINE_FALLBACK]` লিখে আর উত্তরের `note` কি-তে পরিষ্কার জানিয়ে দেয় যে এটা আসল মডেলের আউটপুট নয়। `eval_harness.py` চালালে সেটা নিজেই দেখে নেয় Ollama আছে কি না; থাকলে ৩০টা মক টিকিটের গোল্ডেন সেটে আসল মডেলের স্কোর দেয়, না থাকলে `[MOCK MODE]` লিখে কিওয়ার্ড-ভিত্তিক মক দিয়ে হারনেসটা দেখায়।*
 
 ---
 

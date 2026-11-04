@@ -1,7 +1,7 @@
 """
 Forward Deployed Engineering (FDE) - Field Manual (Companion Codebase)
 Author: Rakibul Hassan (https://aiwithr.github.io/)
-Book Chapter: Chapter 1 - ফিল্ড ডিসকভারি ও এসওপির ব্যবচ্ছেদ
+Book Chapter: Chapter 1 - ফিল্ড ডিসকাভারি ও এসওপি অডিট
 Book Reference URL: https://aiwithr.github.io/fde_book/chapter-1/
 Repository: https://github.com/raqueeb/fdebook_companion
 License: MIT

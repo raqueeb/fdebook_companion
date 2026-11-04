@@ -16,6 +16,8 @@ jobs:
   deploy-and-verify:
     runs-on: self-hosted
     steps:
+      - uses: actions/checkout@v4
+        with: { fetch-depth: 2 }   # self-hosted রানার নিজে চেকআউট করে না; HEAD~1 পেতে দুটো কমিট লাগবে
       - name: Snapshot Last Stable Commit & Deploy New Build
         run: |
           git rev-parse HEAD~1 > .last_stable_commit
