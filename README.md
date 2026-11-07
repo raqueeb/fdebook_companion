@@ -57,10 +57,16 @@ fdebook_companion/
 │   └── .github/workflows/
 │       └── field-deploy.yml               # সেলফ-হিলিং অন-প্রেম ডেপ্লয়মেন্ট ও অটো-রোলব্যাক
 ├── ch04-isp-routing-worker/
-│   └── worker.py                          # ট্র্যাক এ: ঢাকা আইএসপি ফাইবার কাট (OLT LOS) রাউটার
+│   ├── correlator.py                      # ট্র্যাক এ, কোড ১: পন পোর্ট করিলেটর (LOSi/DGi ঝড় থেকে রুট-কজ রায়)
+│   ├── locator.py                         # ট্র্যাক এ, কোড ২: ওটিডিআর দূরত্ব থেকে জিআইএস ম্যাপের পোল
+│   ├── worker.py                          # ট্র্যাক এ (অনলাইন): টিকিট-লেভেল অ্যাসিনক্রোনাস রাউটার (PON + ONU)
+│   └── crew_update.py                     # ট্র্যাক এ (অনলাইন): ক্রুর হোয়াটসঅ্যাপ থেকে লোকাল এলএলএম দিয়ে ইটিএ
 ├── ch04-supply-chain-reconciler/
 │   ├── audit.py                           # ট্র্যাক বি: চট্টগ্রাম বন্দর থ্রি-ওয়ে ইনভয়েস ও স্কেল অডিট
-│   └── manager_hero_report.py             # ফিল্ড পলিটিক্স: মিড-লেভেল ম্যানেজারের ১-ক্লিক রিপোর্ট
+│   ├── manager_hero_report.py             # ফিল্ড পলিটিক্স: মিড-লেভেল ম্যানেজারের ১-ক্লিক রিপোর্ট
+│   ├── slip_vision.py                     # ট্র্যাক বি, কোড ২: স্লিপের ছবি থেকে লোকাল ভিশন মডেলে সংখ্যা + গার্ডরেইল
+│   ├── make_sample_slip.py                # টেস্টের নমুনা ওয়েব্রিজ স্লিপের ছবি বানায় (Pillow)
+│   └── sample_weighbridge_slip.png        # নমুনা ছবি
 ├── ch05-org-scaling/
 │   ├── field_to_core_module.py            # প্যালান্টির প্যাটার্ন: কোর ইঞ্জিন বনাম ব্রাঞ্চ কনফিগ ডিকাপলার
 │   └── quick_win_scorer.py                # প্রথম সপ্তাহের কুইক-উইন প্রায়োরিটাইজেশন স্কোরার
@@ -83,9 +89,13 @@ fdebook_companion/
 | [**Chapter 3: দ্য নিউ এসডিএলসি**](https://aiwithr.github.io/fde_book/chapter-3/) | `ch03-resilient-pipeline/domain_sprint_vat.py` | ২০ মিনিটের ডোমেইন স্প্রিন্ট: ভ্যাট ও রিবেট টেস্ট গার্ডরেইল | `python3 ch03-resilient-pipeline/domain_sprint_vat.py` |
 | [**Chapter 3: দ্য নিউ এসডিএলসি**](https://aiwithr.github.io/fde_book/chapter-3/) | `ch03-resilient-pipeline/eval_harness.py` | বিল্ডের আগে গোল্ডেন ডেটাসেটে মডেলের স্কিমা ও অ্যাকুরেসি টেস্ট | `python3 ch03-resilient-pipeline/eval_harness.py` |
 | [**Chapter 3: দ্য নিউ এসডিএলসি**](https://aiwithr.github.io/fde_book/chapter-3/) | `ch03-resilient-pipeline/.github/workflows/field-deploy.yml` | অন-প্রেম টেস্ট ফেইল করলে সেলফ-হিলিং অটো-রোলব্যাক | GitHub Actions অটোমেটেড |
+| [**Chapter 4: ফিল্ড প্লেবুক (আইএসপি)**](https://aiwithr.github.io/fde_book/chapter-4/) | `ch04-isp-routing-worker/correlator.py` | পন পোর্টের LOSi/DGi ঝড় থেকে ফাইবার কাট, লোডশেডিং, স্প্লিটার বা ড্রপ ক্যাবলের রায় | `python3 ch04-isp-routing-worker/correlator.py` |
+| [**Chapter 4: ফিল্ড প্লেবুক (আইএসপি)**](https://aiwithr.github.io/fde_book/chapter-4/) | `ch04-isp-routing-worker/locator.py` | ওটিডিআরের মিটার থেকে জিআইএস চেইনেজে ম্যাপের পোল ও গুগল ম্যাপ লিংক | `python3 ch04-isp-routing-worker/locator.py` |
 | [**Chapter 4: ফিল্ড প্লেবুক (আইএসপি)**](https://aiwithr.github.io/fde_book/chapter-4/) | `ch04-isp-routing-worker/worker.py` | ঢাকা ফাইবার কাটে কলসেন্টার ট্র্যাফিক কমাতে অ্যাসিনক্রোনাস রাউটার | `python3 ch04-isp-routing-worker/worker.py` |
+| [**Chapter 4: ফিল্ড প্লেবুক (আইএসপি)**](https://aiwithr.github.io/fde_book/chapter-4/) | `ch04-isp-routing-worker/crew_update.py` | ক্রুর বাংলিশ হোয়াটসঅ্যাপ থেকে লোকাল এলএলএম দিয়ে ইটিএ, গার্ডরেইল ও এসএমএস টেমপ্লেট | `python3 ch04-isp-routing-worker/crew_update.py` |
 | [**Chapter 4: ফিল্ড প্লেবুক (সাপ্লাই চেইন)**](https://aiwithr.github.io/fde_book/chapter-4/) | `ch04-supply-chain-reconciler/audit.py` | চট্টগ্রাম বন্দর কাস্টমস বিল, ইনভয়েস ও স্কেলের ১% অডিট | `python3 ch04-supply-chain-reconciler/audit.py` |
 | [**Chapter 4: ফিল্ড প্লেবুক (পলিটিক্স)**](https://aiwithr.github.io/fde_book/chapter-4/) | `ch04-supply-chain-reconciler/manager_hero_report.py` | ম্যানেজারের জন্য ১-ক্লিক এক্সিকিউটিভ ডেমারেজ সেভিংস সামারি | `python3 ch04-supply-chain-reconciler/manager_hero_report.py` |
+| [**Chapter 4: ফিল্ড প্লেবুক (সাপ্লাই চেইন)**](https://aiwithr.github.io/fde_book/chapter-4/) | `ch04-supply-chain-reconciler/slip_vision.py` | ওয়েব্রিজ স্লিপের ছবি থেকে `qwen2.5vl:3b` দিয়ে সংখ্যা, gross-tare=net গার্ডরেইল | `python3 ch04-supply-chain-reconciler/slip_vision.py` |
 | [**Chapter 5: অর্গানাইজেশন স্কেলিং**](https://aiwithr.github.io/fde_book/chapter-5/) | `ch05-org-scaling/field_to_core_module.py` | প্যালান্টির প্যাটার্ন: কোর ইঞ্জিনে হাত না দিয়ে ফিল্ড কনফিগ ডিকাপল | `python3 ch05-org-scaling/field_to_core_module.py` |
 | [**Chapter 5: অর্গানাইজেশন স্কেলিং**](https://aiwithr.github.io/fde_book/chapter-5/) | `ch05-org-scaling/quick_win_scorer.py` | প্রথম সপ্তাহের কুইক-উইন বাছাই করতে অপচয় ও ঝুঁকি স্কোরিং | `python3 ch05-org-scaling/quick_win_scorer.py` |
 | [**Conclusion: হ্যান্ডওভার ও এক্সিট**](https://aiwithr.github.io/fde_book/conclusion/) | `conclusion-handover/health_check.py` | লোকাল আইটি টিমের জন্য অটোমেটেড ৫ মিনিটের হেলথ চেক স্ক্রিপ্ট | `python3 conclusion-handover/health_check.py` |

@@ -11,6 +11,7 @@ Description:
 ডিকাপল করার ফিল্ড-টু-কোর ইঞ্জিনিয়ারিং আর্কিটেকচার (Field-to-Core Engine)।
 """
 
+import re
 from decimal import Decimal
 
 def core_reconcile(customs: dict, invoice: dict, slip: dict, cfg: dict) -> dict:
@@ -18,7 +19,7 @@ def core_reconcile(customs: dict, invoice: dict, slip: dict, cfg: dict) -> dict:
     limit = declared * Decimal(cfg["tolerance_pct"]) / 100    # ছাড়ের সীমা আসছে কনফিগ থেকে
     weighed = Decimal(slip["scale_kg"] - slip["tare_kg"])      # ট্রাক আর কন্টেইনারের ট্যার বাদ
     invoiced = Decimal(invoice["net_kg"] + invoice["packing_kg"])
-    hs_ok = customs["hs_code"].replace(".", "")[:6] == invoice["hs_code"].replace(".", "")[:6]
+    hs_ok = re.sub(r"\D", "", customs["hs_code"])[:6] == re.sub(r"\D", "", invoice["hs_code"])[:6]
     ok = abs(weighed - declared) <= limit and abs(invoiced - declared) <= limit and hs_ok
     return {"client": cfg["name"], "status": "READY_FOR_GATE_PASS" if ok else "FLAGGED"}
 

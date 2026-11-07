@@ -11,10 +11,12 @@ Description:
 ইনভয়েস এবং ওয়েব্রিজ স্লিপ ওজনের থ্রি-ওয়ে রিকনসিলিয়েশন ও ১% টলারেন্স অডিট ইঞ্জিন।
 """
 
+import re
+
 TOLERANCE_PCT = 1  # হেড ক্লার্কের মুখে শোনা নিয়ম, ক্লায়েন্ট ভেদে বদলাবে
 
 def hs6(code: str) -> str:
-    return code.replace(".", "")[:6]  # আন্তর্জাতিক এইচএস কোডের প্রথম ছয় ডিজিট
+    return re.sub(r"\D", "", str(code))[:6]  # ডট, ড্যাশ, স্পেস যা-ই থাকুক, শুধু ডিজিটের প্রথম ছয়টা
 
 def reconcile(customs: dict, invoice: dict, slip: dict) -> dict:
     declared = customs["gross_kg"]                       # বিল অব এন্ট্রির ঘোষিত ওজন
